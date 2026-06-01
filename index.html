@@ -40,12 +40,12 @@
   
   .van-img { 
     max-width: 140px; max-height: 130px; object-fit: contain; 
-    transition: transform 0.1s linear; z-index: 2; margin-bottom: -5px; 
+    z-index: 2; margin-bottom: -5px; 
   }
   
   .van-side-img { 
     max-width: 220px; max-height: 110px; object-fit: contain; 
-    transition: transform 0.1s linear; z-index: 2; margin-bottom: -5px;
+    z-index: 2; margin-bottom: -5px;
   }
   
   .ground-line { position: absolute; bottom: 45px; width: 100%; height: 4px; background: #555; z-index: 1; }
@@ -135,11 +135,8 @@
   let rollOffset = 0;
   let pitchOffset = 0;
   
-  // Współczynnik wygładzania (eliminuje drgawki na iOS)
-  // Wartość 0.15 oznacza: bierz 15% nowego odczytu i 85% poprzedniego
   const smoothing = 0.15; 
 
-  // Funkcja normalizująca kąt do poprawnego zakresu od -180 do 180 (naprawia "Ustaw Zero" na iOS)
   function normalizeAngle(angle) {
     let a = angle % 360;
     if (a > 180) a -= 360;
@@ -148,12 +145,11 @@
   }
 
   function updateUI() {
-    // Zastosowanie normalizacji przy wyliczaniu ostatecznego wychylenia
     let roll = normalizeAngle(currentRawRoll - rollOffset);
     let pitch = normalizeAngle(currentRawPitch - pitchOffset);
 
-    rollAngleText.innerText = roll.toFixed(1) + '°';
-    pitchAngleText.innerText = pitch.toFixed(1) + '°';
+    rollAngleText.innerText = roll.toFixed(1) + '\u00B0';
+    pitchAngleText.innerText = pitch.toFixed(1) + '\u00B0';
 
     vanRear.style.transform = `rotate(${roll}deg)`;
     vanSide.style.transform = `rotate(${pitch}deg)`;
@@ -199,7 +195,6 @@
     let rawBeta = event.beta || 0;
     let rawGamma = event.gamma || 0;
     
-    // Filtr dolnoprzepustowy wygładzający ruch grafiki
     currentRawPitch = currentRawPitch + smoothing * (rawBeta - currentRawPitch);
     currentRawRoll = currentRawRoll + smoothing * (rawGamma - currentRawRoll);
     
