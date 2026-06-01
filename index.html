@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
@@ -86,7 +86,7 @@
       <div id="right-cm">PRAWY: <span>0.0 cm</span></div>
     </div>
     
-    <img id="van-rear" class="van-img" src="tyl.png" alt="Tyl">
+    <img id="van-rear" class="van-img" src="tyl.png" alt="Tył">
     
     <div class="ground-line"></div>
     <div class="center-angle" id="roll-angle">0.0&deg;</div>
@@ -94,8 +94,8 @@
 
   <div class="panel">
     <div class="info-box">
-      <div id="front-cm">PRZ�D: <span>0.0 cm</span></div>
-      <div id="rear-cm">TYL: <span>0.0 cm</span></div>
+      <div id="front-cm">PRZÓD: <span>0.0 cm</span></div>
+      <div id="rear-cm">TYŁ: <span>0.0 cm</span></div>
     </div>
     
     <img id="van-side" class="van-side-img" src="bok.png" alt="Bok">
@@ -135,11 +135,11 @@
   let rollOffset = 0;
   let pitchOffset = 0;
   
-  // Wsp�lczynnik wygladzania (eliminuje drgawki na iOS)
-  // Wartosc 0.15 oznacza: bierz 15% nowego odczytu i 85% poprzedniego
+  // Współczynnik wygładzania (eliminuje drgawki na iOS)
+  // Wartość 0.15 oznacza: bierz 15% nowego odczytu i 85% poprzedniego
   const smoothing = 0.15; 
 
-  // Funkcja normalizujaca kat do poprawnego zakresu od -180 do 180 (naprawia "Ustaw Zero" na iOS)
+  // Funkcja normalizująca kąt do poprawnego zakresu od -180 do 180 (naprawia "Ustaw Zero" na iOS)
   function normalizeAngle(angle) {
     let a = angle % 360;
     if (a > 180) a -= 360;
@@ -152,8 +152,8 @@
     let roll = normalizeAngle(currentRawRoll - rollOffset);
     let pitch = normalizeAngle(currentRawPitch - pitchOffset);
 
-    rollAngleText.innerText = roll.toFixed(1) + '�';
-    pitchAngleText.innerText = pitch.toFixed(1) + '�';
+    rollAngleText.innerText = roll.toFixed(1) + '°';
+    pitchAngleText.innerText = pitch.toFixed(1) + '°';
 
     vanRear.style.transform = `rotate(${roll}deg)`;
     vanSide.style.transform = `rotate(${pitch}deg)`;
@@ -173,25 +173,25 @@
     }
 
     if (roll < 0) {
-        leftCm.innerHTML = `PODNIES LEWY: <span style="color:#ff4444">+${lCm.toFixed(1)} cm</span>`;
+        leftCm.innerHTML = `PODNIEŚ LEWY: <span style="color:#ff4444">+${lCm.toFixed(1)} cm</span>`;
         rightCm.innerHTML = `PRAWY: <span>0.0 cm</span>`;
     } else if (roll > 0) {
         leftCm.innerHTML = `LEWY: <span>0.0 cm</span>`;
-        rightCm.innerHTML = `PODNIES PRAWY: <span style="color:#ff4444">+${rCm.toFixed(1)} cm</span>`;
+        rightCm.innerHTML = `PODNIEŚ PRAWY: <span style="color:#ff4444">+${rCm.toFixed(1)} cm</span>`;
     } else {
         leftCm.innerHTML = `LEWY: <span>0.0 cm</span>`;
         rightCm.innerHTML = `PRAWY: <span>0.0 cm</span>`;
     }
 
     if (pitch > 0) {
-        frontCm.innerHTML = `PRZ�D: <span>0.0 cm</span>`;
-        rearCm.innerHTML = `PODNIES TYL: <span style="color:#ff4444">+${fCm.toFixed(1)} cm</span>`;
+        frontCm.innerHTML = `PRZÓD: <span>0.0 cm</span>`;
+        rearCm.innerHTML = `PODNIEŚ TYŁ: <span style="color:#ff4444">+${fCm.toFixed(1)} cm</span>`;
     } else if (pitch < 0) {
-        frontCm.innerHTML = `PODNIES PRZ�D: <span style="color:#ff4444">+${bCm.toFixed(1)} cm</span>`;
-        rearCm.innerHTML = `TYL: <span>0.0 cm</span>`;
+        frontCm.innerHTML = `PODNIEŚ PRZÓD: <span style="color:#ff4444">+${bCm.toFixed(1)} cm</span>`;
+        rearCm.innerHTML = `TYŁ: <span>0.0 cm</span>`;
     } else {
-        frontCm.innerHTML = `PRZ�D: <span>0.0 cm</span>`;
-        rearCm.innerHTML = `TYL: <span>0.0 cm</span>`;
+        frontCm.innerHTML = `PRZÓD: <span>0.0 cm</span>`;
+        rearCm.innerHTML = `TYŁ: <span>0.0 cm</span>`;
     }
   }
 
@@ -199,7 +199,7 @@
     let rawBeta = event.beta || 0;
     let rawGamma = event.gamma || 0;
     
-    // Filtr dolnoprzepustowy wygladzajacy ruch grafiki
+    // Filtr dolnoprzepustowy wygładzający ruch grafiki
     currentRawPitch = currentRawPitch + smoothing * (rawBeta - currentRawPitch);
     currentRawRoll = currentRawRoll + smoothing * (rawGamma - currentRawRoll);
     
